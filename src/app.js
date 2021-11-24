@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-
 import * as usersController from './controllers/usersController.js';
 import * as financialEventsController from './controllers/financialEventsController.js';
 
