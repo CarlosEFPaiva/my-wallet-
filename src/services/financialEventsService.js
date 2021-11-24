@@ -17,18 +17,18 @@ async function getUserFromToken(token) {
 }
 
 async function createNewEvent({ userId, value, type }) {
-    if (!['INCOME', 'OUTCOME'].includes(type)) {
+    if (!['INCOME', 'OUTCOME'].includes(type) || value < 0) {
         return;
     }
-
-    if (value < 0) {
-        return;
-    }
-
     return await financialEventsRepository.addNewEvent({ userId, value, type });
+}
+
+async function getEventsById(userId) {
+    return await financialEventsRepository.getEventsById(userId);
 }
 
 export {
     getUserFromToken,
-    createNewEvent
+    createNewEvent,
+    getEventsById,
 }
