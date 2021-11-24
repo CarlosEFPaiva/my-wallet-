@@ -42,7 +42,25 @@ async function getUserEvents(req, res) {
     }
 }
 
+async function getUserTotalSum(req, res) {
+	try {
+        const authorization = req.headers.authorization || "";
+		const token = authorization.split('Bearer ')[1];
+        const user = await financialEventsService.getUserFromToken(token);
+        if (!user) {
+            return res.sendStatus(401);
+        }
+        const sum = await financialEventsService.getTotalSumById(user.id);
+
+		res.send({ sum });
+	} catch (err) {
+		console.error(err);
+		res.sendStatus(500);
+	}
+}
+
 export {
     postNewEvent,
     getUserEvents,
+    getUserTotalSum,
 }

@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import * as financialEventsRepository from '../repositories/financialEventsRepository.js';
@@ -27,8 +26,15 @@ async function getEventsById(userId) {
     return await financialEventsRepository.getEventsById(userId);
 }
 
+async function getTotalSumById(userId) {
+    const events = await financialEventsRepository.getEventsById(userId);
+    const sum = events.reduce((total, event) => event.type === 'INCOME' ? total + event.value : total - event.value, 0);
+    return sum;
+}
+
 export {
     getUserFromToken,
     createNewEvent,
     getEventsById,
+    getTotalSumById,
 }
